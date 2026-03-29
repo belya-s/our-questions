@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мы ❤️‍🩹?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #fdf6f0;
+  --bg2: #fef0f4;
+  --pink: #e8305a;
+  --pink-soft: #ff8ab0;
+  --pink-dim: rgba(232,48,90,0.15);
+  --red: #c0184e;
+  --glow-pink: rgba(232,48,90,0.22);
+  --glow-red: rgba(192,24,78,0.18);
+  --text: #2e1a26;
+  --text-dim: #8a6a7a;
+  --card-bg: rgba(255,255,255,0.75);
+  --card-border: rgba(220,100,140,0.2);
+  --card-hover: rgba(232,48,90,0.07);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: linear-gradient(160deg, #fff9f6 0%, #fef0f4 30%, #f8f0ff 65%, #f0f6ff 100%);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── AMBIENT GLOWS ── */
+.ambient {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.amb1 { width:500px; height:500px; background: radial-gradient(circle, rgba(255,182,193,0.25) 0%, transparent 70%); top:-100px; left:-100px; animation-delay: 0s; }
+.amb2 { width:400px; height:400px; background: radial-gradient(circle, rgba(232,41,74,0.12) 0%, transparent 70%); bottom:-50px; right:-50px; animation-delay:-5s; }
+.amb3 { width:300px; height:300px; background: radial-gradient(circle, rgba(180,160,255,0.15) 0%, transparent 70%); top:40%; left:50%; transform:translateX(-50%); animation-delay:-3s; }
+
+@keyframes drift {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.08); }
+}
+
+/* ── LAYOUT ── */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+}
+
+/* ── HERO ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.center-ring {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid;
+  animation: pulseRing 4s ease-in-out infinite;
+}
+.ring-1 { width:100%; height:100%; border-color: rgba(255,77,141,0.35); animation-delay:0s; }
+.ring-2 { width:78%;  height:78%;  border-color: rgba(255,77,141,0.22); animation-delay:-.8s; }
+.ring-3 { width:56%;  height:56%;  border-color: rgba(255,77,141,0.15); animation-delay:-1.6s; }
+
+@keyframes pulseRing {
+  0%,100% { transform: scale(1); opacity:1; }
+  50%      { transform: scale(1.06); opacity:0.6; }
+}
+
+.center-core {
+  position: relative;
+  z-index: 2;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 40% 35%, #ff6fa3, #c0184e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 0 30px var(--glow-pink), 0 0 60px rgba(255,77,141,0.15);
+  animation: heartbeat 3s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); box-shadow: 0 0 30px var(--glow-pink), 0 0 60px rgba(255,77,141,0.15); }
+  30%      { transform: scale(1.07); box-shadow: 0 0 45px var(--glow-pink), 0 0 90px rgba(255,77,141,0.25); }
+  60%      { transform: scale(0.97); }
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 8vw, 72px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #2e1a26;
+  line-height: 1.1;
+}
+
+.hero-title .accent {
+  color: var(--pink);
+  font-style: italic;
+  text-shadow: 0 0 30px var(--glow-pink);
+}
+
+.hero-sub {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ── VERTICAL LINE ── */
+.spine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(255,77,141,0.4), transparent);
+  margin: 0 auto 8px;
+}
+
+/* ── BRANCHES ── */
+.branches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── BRANCH ── */
+.branch {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(220,100,140,0.15);
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s;
+  box-shadow: 0 2px 12px rgba(200,100,140,0.07);
+}
+
+.branch:hover { border-color: rgba(255,77,141,0.3); }
+
+/* Glow left bar */
+.branch::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 4px 0 0 4px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.branch.open::before { opacity: 1; }
+
+.branch-pink::before   { background: linear-gradient(to bottom, #ff4d8d, #ff8ab0); }
+.branch-orange::before { background: linear-gradient(to bottom, #ff7043, #ffb347); }
+.branch-green::before  { background: linear-gradient(to bottom, #5ec27a, #a8e6bc); }
+.branch-blue::before   { background: linear-gradient(to bottom, #5ab4f0, #a0d4f8); }
+
+/* ── BRANCH HEADER ── */
+.branch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 18px 26px;
+  cursor: pointer;
+  user-select: none;
+  gap: 12px;
+  transition: background 0.2s;
+}
+
+.branch-header:hover { background: rgba(255,77,141,0.05); }
+.branch.open .branch-header { background: rgba(255,77,141,0.04); }
+
+.branch-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.branch-emoji {
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.branch-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.branch-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 11px;
+  color: var(--text-dim);
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.chevron-icon {
+  width: 18px;
+  height: 18px;
+  border-right: 1.5px solid var(--text-dim);
+  border-bottom: 1.5px solid var(--text-dim);
+  transform: rotate(45deg) translateY(-3px);
+  transition: transform 0.35s ease, border-color 0.2s;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.branch.open .chevron-icon {
+  transform: rotate(-135deg) translateY(-3px);
+  border-color: var(--pink);
+  opacity: 1;
+}
+
+/* ── BRANCH BODY ── */
+.branch-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.branch.open .branch-body { max-height: 3000px; }
+
+.cards-wrap {
+  padding: 4px 20px 20px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── CARD ── */
+.card {
+  position: relative;
+  border-radius: 13px;
+  padding: 14px 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4a3050;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.2s;
+  overflow: hidden;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,77,141,0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.card:hover {
+  background: var(--card-hover);
+  border-color: rgba(255,77,141,0.35);
+  color: var(--text);
+  transform: translateX(3px);
+}
+
+.card:hover::after { opacity: 1; }
+
+.card:active { transform: translateX(3px) scale(0.99); }
+
+.card-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pink);
+  margin-right: 10px;
+  vertical-align: middle;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ── EXPANDED DETAIL ── */
+.card-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding-top 0.3s;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+  padding-top: 0;
+  padding-left: 15px;
+  border-left: 2px solid rgba(255,77,141,0.25);
+  margin-top: 0;
+  line-height: 1.6;
+}
+
+.card.expanded .card-detail {
+  max-height: 200px;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+/* ── EMPTY CARD ── */
+.card-empty {
+  border-radius: 13px;
+  padding: 20px 18px;
+  border: 1.5px dashed rgba(90,180,240,0.2);
+  color: #5a7a96;
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* ── DIVIDER ── */
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  opacity: 0.3;
+}
+.hero-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(255,77,141,0.5), transparent); }
+.hero-divider-dot  { font-size: 10px; color: var(--pink); }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  margin-top: 64px;
+  color: var(--text-dim);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+/* ── FADE IN ── */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.hero     { animation: fadeUp 0.8s ease both; }
+.branches { animation: fadeUp 0.8s 0.25s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .page { padding: 40px 14px 60px; }
+  .center-ring { width:140px; height:140px; }
+  .center-core { width:62px; height:62px; font-size:26px; }
+  .branch-header { padding: 14px 16px 14px 20px; }
+  .cards-wrap { padding: 4px 14px 16px 20px; }
+  .badge { display:none; }
+  .branch-title { font-size: 18px; }
+}
+
+@media (min-width: 900px) {
+  .page { padding: 80px 40px 100px; }
+  .card { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient amb1"></div>
+<div class="ambient amb2"></div>
+<div class="ambient amb3"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="center-ring">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="center-core">❤️‍🩹</div>
+    </div>
+    <h1 class="hero-title">Мы <span class="accent">❤️</span>?</h1>
+    <p class="hero-sub">О том, что между нами — честно и без фильтров<br><span style="font-size:12px;opacity:0.7">Я поделюсь тем, что чувствую я — а ты расскажешь, что чувствуешь ты</span></p>
+  </div>
+
+  <div class="hero-divider">
+    <div class="hero-divider-line"></div>
+    <span class="hero-divider-dot">♡</span>
+    <div class="hero-divider-line"></div>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="branches">
+
+    <!-- 💕 БЛИЗОСТЬ -->
+    <div class="branch branch-pink" id="b1">
+      <div class="branch-header" onclick="toggle('b1')">
+        <div class="branch-header-left">
+          <div class="branch-emoji">💕</div>
+          <span class="branch-title">Близость</span>
+        </div>
+        <div class="branch-meta">
+          <span class="badge">17 вопросов</span>
+          <div class="chevron-icon"></div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="cards-wrap">
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Твоё самое любимое наше совместное воспоминание?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Расскажи, за что тебе стыдно (какая-то ситуация или история)
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>О чём ты больше всего сожалеешь?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что в моём характере тебя раздражает больше всего?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что тебя бесит в моей семье или друзьях?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Когда ты чувствуешь, что мы «команда»?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Чувствовал ли ты, что я тебя недостойна? Или наоборот — что ты недостоин меня?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Ты бы мог променять крутую перспективу (работа / возможности) на меня?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Если бы ты мог пригласить кого угодно на ужин — кто бы это был?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>До моих разговоров о проблемах — тебе всё было ок? Если нет, что не устраивало, но ты не говорил?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что я делаю такого, что тебя поддерживает, даже если я этого не замечаю?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Когда ты в последний раз чувствовал ко мне сильную нежность?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что ты боишься потерять в наших отношениях?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Есть ли тема, которую ты избегаешь со мной?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Есть ли что-то, за что ты мне благодарен, но никогда не говорил?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что тебя пугает в наших отношениях?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Как ты понимаешь, что любишь меня?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔥 ИНТИМ -->
+    <div class="branch branch-orange" id="b2">
+      <div class="branch-header" onclick="toggle('b2')">
+        <div class="branch-header-left">
+          <div class="branch-emoji">🔥</div>
+          <span class="branch-title">Интим</span>
+        </div>
+        <div class="branch-meta">
+          <span class="badge">5 вопросов</span>
+          <div class="chevron-icon"></div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="cards-wrap">
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что в нашей интимной близости тебя не устраивает?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что тебе особенно нравится в нашей интимной близости?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что тебе во мне всё ещё интересно / привлекает / завораживает?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>В какие моменты тебе хочется больше близости со мной?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что усиливает твоё желание ко мне вне секса?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🌿 ПЛАНЫ -->
+    <div class="branch branch-green" id="b3">
+      <div class="branch-header" onclick="toggle('b3')">
+        <div class="branch-header-left">
+          <div class="branch-emoji">🌿</div>
+          <span class="branch-title">Планы</span>
+        </div>
+        <div class="branch-meta">
+          <span class="badge">6 вопросов</span>
+          <div class="chevron-icon"></div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="cards-wrap">
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Какие маленькие цели мы могли бы поставить как пара?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Что бы ты хотел попробовать вместе со мной в ближайшее время?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Как бы ты хотел, чтобы выглядел наш ближайший год?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Ты когда-то говорил, что видишь меня своей женой — изменилось ли это?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Ты бы хотел, чтобы я была мамой твоих детей? Как бы ты хотел их воспитывать?
+          </div>
+          <div class="card" onclick="expandCard(this)">
+            <span class="card-dot"></span>Ты веришь, что мы будем вместе через 5 лет? Почему?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🎡 ЗАНЯТИЯ -->
+    <div class="branch branch-blue" id="b4">
+      <div class="branch-header" onclick="toggle('b4')">
+        <div class="branch-header-left">
+          <div class="branch-emoji">🎡</div>
+          <span class="branch-title">Занятия</span>
+        </div>
+        <div class="branch-meta">
+          <span class="badge">в процессе</span>
+          <div class="chevron-icon"></div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="cards-wrap">
+          <div class="card-empty">✦ &nbsp; скоро будет... &nbsp; ✦</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /branches -->
+
+  <div class="footer">♡ · · · ♡ · · · ♡</div>
+
+</div><!-- /page -->
+
+<script>
+  function toggle(id) {
+    const b = document.getElementById(id);
+    b.classList.toggle('open');
+  }
+
+  function expandCard(card) {
+    // убираем expanded у других карточек в той же ветке
+    const wrap = card.closest('.cards-wrap');
+    wrap.querySelectorAll('.card.expanded').forEach(c => {
+      if (c !== card) c.classList.remove('expanded');
+    });
+    card.classList.toggle('expanded');
+  }
+</script>
+</body>
+</html>
